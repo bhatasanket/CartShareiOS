@@ -8,11 +8,11 @@
 
 import Foundation
 struct User : Codable {
-    var item : Item?
+    var Item : Item?
     
     enum CodingKeys: String, CodingKey {
         
-        case item = "Item"
+        case Item = "Item"
     }
     
     struct Item : Codable {
@@ -21,6 +21,7 @@ struct User : Codable {
         let firstName : String?
         let lastName : String?
         let userID : String?
+        var invitations : [String]?
         
         enum CodingKeys: String, CodingKey {
             
@@ -29,6 +30,7 @@ struct User : Codable {
             case firstName = "firstName"
             case lastName = "lastName"
             case userID = "userID"
+            case invitations = "invitations"
         }
         
         
@@ -36,11 +38,11 @@ struct User : Codable {
 }
 
 struct UserLogin: Codable {
-    let item : Item?
+    let Item : Item?
     
     enum CodingKeys: String, CodingKey {
         
-        case item
+        case Item
     }
     
     struct Item : Codable {

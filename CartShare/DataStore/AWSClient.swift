@@ -28,7 +28,7 @@ class AWSClient {
     
     func isUserValid(userID: String, password: String, completion: @escaping (LoginResponse) -> Void) {
         
-        let post = UserLogin(item: UserLogin.Item(userID: userID, password: password))
+        let post = UserLogin(Item: UserLogin.Item(userID: userID, password: password))
         
         
         var urlComponents = URLComponents()
@@ -174,6 +174,27 @@ class AWSClient {
     
     
     
+    func getUserDetailsforInvite(userID: String, completion: @escaping (UserResult) -> Void) {
+        
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = awsBaseURL
+        urlComponents.path = "/prod/user/invite"
+        urlComponents.queryItems = [URLQueryItem(name: "userID", value: userID)]
+        guard let url = urlComponents.url else { fatalError("Could not create URL from components") }
+        //        let url = URL(string: "https://"+awsBaseURL+"/prod/user?userID=\(userID)&password=\(password)")
+        let session = URLSession(configuration: .default)
+        let task = session.dataTask(with: url) {
+            (data, response, error) -> Void in
+            print(error?.localizedDescription)
+            
+            let result = self.processUserRequest(data: data, error: error)
+            OperationQueue.main.addOperation {
+                completion(result)
+            }
+        }
+        task.resume()
+    }
     
     
     

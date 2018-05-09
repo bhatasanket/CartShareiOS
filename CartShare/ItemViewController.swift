@@ -20,6 +20,7 @@ class ItemViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
     }
 
     @IBAction func addItemAction(_ sender: UIBarButtonItem) {
@@ -31,7 +32,7 @@ class ItemViewController: UIViewController {
         inputBox.addAction(UIAlertAction(title: "Add", style: .default, handler: {
             (action) -> Void in
             let itemName = inputBox.textFields![0] as UITextField
-            self.cart?.item?.items?.append(Cart.Item.Items(name: itemName.text, addedBy: self.user?.item?.firstName, completed: false))
+            self.cart?.item?.items?.append(Cart.Item.Items(name: itemName.text, addedBy: self.user?.Item?.firstName, completed: false))
             self.awsClient.saveCart(cart: self.cart!){
                 (response) in
                 if (response.response != "successful"){

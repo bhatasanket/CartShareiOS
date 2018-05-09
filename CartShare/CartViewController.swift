@@ -104,6 +104,7 @@ extension CartViewController:UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CartCell")!
         cell.textLabel?.text = family?.item?.carts![indexPath.row]
+        cell.textLabel?.font = UIFont(name: "Bradley Hand", size: 27)
         return cell
     }
     
@@ -126,5 +127,6 @@ extension CartViewController: UITableViewDelegate{
             }
         }
     }
+    
     
 }

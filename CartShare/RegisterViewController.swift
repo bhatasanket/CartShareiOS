@@ -80,7 +80,7 @@ class RegisterViewController: UIViewController {
             self.txtRePassword.text = ""
             return
         }
-        user = User(item: User.Item(password: password, family: [], firstName: firstName, lastName: lastName, userID: userName))
+        user = User(Item: User.Item(password: password, family: [], firstName: firstName, lastName: lastName, userID: userName, invitations: []))
         awsClient.saveUser(user: user!){ (response) in
             if response.response == "successful"{
                 print("success")
