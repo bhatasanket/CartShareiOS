@@ -36,10 +36,8 @@
 		5F1FB361209D1E070026AD3C /* IQToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1FB34F209D1E060026AD3C /* IQToolbar.swift */; };
 		5F1FB362209D1E070026AD3C /* IQUIView+IQKeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1FB350209D1E060026AD3C /* IQUIView+IQKeyboardToolbar.swift */; };
 		5F1FB363209D1E070026AD3C /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5F1FB352209D1E060026AD3C /* IQKeyboardManager.bundle */; };
-		5F1FB365209E24090026AD3C /* NewFamilyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1FB364209E24090026AD3C /* NewFamilyViewController.swift */; };
 		5F1FB367209E93BB0026AD3C /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1FB366209E93BB0026AD3C /* CartViewController.swift */; };
 		5F1FB369209EAEB10026AD3C /* ItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1FB368209EAEB10026AD3C /* ItemViewController.swift */; };
-		5F1FB36B209F67770026AD3C /* NewItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1FB36A209F67770026AD3C /* NewItemViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,10 +73,8 @@
 		5F1FB34F209D1E060026AD3C /* IQToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IQToolbar.swift; sourceTree = "<group>"; };
 		5F1FB350209D1E060026AD3C /* IQUIView+IQKeyboardToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IQUIView+IQKeyboardToolbar.swift"; sourceTree = "<group>"; };
 		5F1FB352209D1E060026AD3C /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
-		5F1FB364209E24090026AD3C /* NewFamilyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFamilyViewController.swift; sourceTree = "<group>"; };
 		5F1FB366209E93BB0026AD3C /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		5F1FB368209EAEB10026AD3C /* ItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewController.swift; sourceTree = "<group>"; };
-		5F1FB36A209F67770026AD3C /* NewItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewItemViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,10 +119,8 @@
 				5F1FB316209C12110026AD3C /* LoginViewController.swift */,
 				5F1FB318209C15820026AD3C /* FamilyViewController.swift */,
 				5F1FB339209CCE5D0026AD3C /* RegisterViewController.swift */,
-				5F1FB364209E24090026AD3C /* NewFamilyViewController.swift */,
 				5F1FB366209E93BB0026AD3C /* CartViewController.swift */,
 				5F1FB368209EAEB10026AD3C /* ItemViewController.swift */,
-				5F1FB36A209F67770026AD3C /* NewItemViewController.swift */,
 			);
 			path = CartShare;
 			sourceTree = "<group>";
@@ -289,7 +283,6 @@
 				5F1FB354209D1E070026AD3C /* IQUIScrollView+Additions.swift in Sources */,
 				5F1FB33A209CCE5D0026AD3C /* RegisterViewController.swift in Sources */,
 				5F1FB355209D1E070026AD3C /* IQUITextFieldView+Additions.swift in Sources */,
-				5F1FB365209E24090026AD3C /* NewFamilyViewController.swift in Sources */,
 				5F1FB359209D1E070026AD3C /* IQKeyboardManagerConstantsInternal.swift in Sources */,
 				5F1FB321209C32110026AD3C /* AWSClient.swift in Sources */,
 				5F1FB317209C12120026AD3C /* LoginViewController.swift in Sources */,
@@ -309,7 +302,6 @@
 				5F1FB31E209C30CA0026AD3C /* Family.swift in Sources */,
 				5F1FB369209EAEB10026AD3C /* ItemViewController.swift in Sources */,
 				5F1FB323209C32CA0026AD3C /* User.swift in Sources */,
-				5F1FB36B209F67770026AD3C /* NewItemViewController.swift in Sources */,
 				5F1FB358209D1E070026AD3C /* IQKeyboardManagerConstants.swift in Sources */,
 				5F1FB35C209D1E070026AD3C /* IQTextView.swift in Sources */,
 				5F1FB325209C34DC0026AD3C /* Cart.swift in Sources */,

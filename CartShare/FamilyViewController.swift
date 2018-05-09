@@ -27,7 +27,62 @@ class FamilyViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    @IBAction func addFamily(_ sender: UIBarButtonItem) {
+        var inputBox = UIAlertController(title: "Add Family", message:"", preferredStyle: UIAlertControllerStyle.alert)
+        inputBox.addTextField(configurationHandler: {
+            (textField)-> Void in
+        })
+        
+        inputBox.addAction(UIAlertAction(title: "Add", style: .default, handler: {
+            (action) -> Void in
+            let familyName = inputBox.textFields![0] as UITextField
+            if (self.user?.item?.family?.contains(familyName.text!))!{
+//            self.awsClient.getFamilyDetails(familyID: newFamily.text!){
+//                (response) in
+//                switch response{
+//                case let .success(detail):
+//                    if let _ = detail.item {
+                        OperationQueue.main.addOperation {
+                            let alert = UIAlertController(title: "Family name already taken", message: "try a different name", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+                            self.present(alert, animated: true)
+                        }
+                        
+                    }else{
+                        self.awsClient.saveFamily(family: Family(item: Family.Item(familyID: familyName.text!, carts: []))){ (response) in
+                            if response.response == "successful"{
+                                print("success")
+                                self.user!.item!.family!.append(familyName.text!)
+                                self.awsClient.saveUser(user: self.user!){
+                                    (response) in
+                                    if response.response == "successful"{
+                                        OperationQueue.main.addOperation {
+                                            let alert = UIAlertController(title: "Family created!!", message: "", preferredStyle: .alert)
+                                            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+                                            self.present(alert, animated: true)
+                                            self.tableView.reloadData()
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                    return
+//                case let .failure(error):
+//
+//                    sender.resignFirstResponder()
+//                    return
+//                }
+//            }
+        }))
+        
+        inputBox.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(inputBox, animated: true, completion: nil)
+    }
+    
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -48,20 +103,6 @@ class FamilyViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     @IBAction func unwindSegue(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? NewFamilyViewController {
-            // Add a new course
-            print(sourceViewController.newFamily.text!)
-            user!.item!.family!.append(sourceViewController.newFamily.text!)
-            awsClient.saveUser(user: user!){
-                (response) in
-                if response.response == "successful"{
-                    OperationQueue.main.addOperation {
-                        self.tableView.reloadData()
-                    }
-                    
-                }
-            }
-        }
         if let sourceViewController = sender.source as? CartViewController {
             // Add a new course
             tableView.reloadData()

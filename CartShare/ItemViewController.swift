@@ -111,6 +111,13 @@ extension ItemViewController: UITableViewDataSource{
     }
 }
 extension ItemViewController: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var detailBox = UIAlertController(title: "Item detail", message:"\(cart?.item?.items![indexPath.row].name!) added by \(cart?.item?.items![indexPath.row].addedBy!)", preferredStyle: UIAlertControllerStyle.alert)
+        detailBox.addAction(UIAlertAction(title: "Done", style: .default, handler: nil))
+        
+        self.present(detailBox, animated: true, completion: nil)
+    }
+    
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         // 1
         let titlemsg = (self.cart?.item?.items![indexPath.row].completed)! ? "Undo" :  "Done"
