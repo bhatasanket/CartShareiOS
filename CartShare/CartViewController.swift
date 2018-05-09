@@ -22,6 +22,45 @@ class CartViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    @IBAction func addCartAction(_ sender: UIBarButtonItem) {
+        var inputBox = UIAlertController(title: "Add Cart", message:"", preferredStyle: UIAlertControllerStyle.alert)
+        inputBox.addTextField(configurationHandler: {
+            (textField)-> Void in
+        })
+        
+        inputBox.addAction(UIAlertAction(title: "Add", style: .default, handler: {
+            (action) -> Void in
+            let cartName = inputBox.textFields![0] as UITextField
+            self.awsClient.saveCart(cart: Cart(item: Cart.Item(items: [], cartID: cartName.text, familyID: self.family?.item?.familyID))){
+                (response) in
+                if (response.response != "successful"){
+                    let alert = UIAlertController(title: "something went wrong", message: "Please try again", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                }else{
+                    self.family?.item?.carts?.append(cartName.text!)
+                    self.awsClient.saveFamily(family: self.family!){
+                        (response) in
+                        if (response.response != "successful"){
+                            let alert = UIAlertController(title: "something went wrong", message: "Please try again", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+                            self.present(alert, animated: true)
+                        }else{
+                            OperationQueue.main.addOperation {
+                                self.tableView.reloadData()
+                            }
+                        }
+                    }
+                }
+                
+                
+            }
+        }))
+        
+        inputBox.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(inputBox, animated: true, completion: nil)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

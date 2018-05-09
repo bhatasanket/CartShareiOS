@@ -1,7 +1,7 @@
 import Foundation
 
 struct Family : Codable {
-	let item : Item?
+	var item : Item?
 
 	enum CodingKeys: String, CodingKey {
 		case item = "Item"
@@ -9,7 +9,7 @@ struct Family : Codable {
 
     struct Item : Codable {
         let familyID : String?
-        let carts : [String]?
+        var carts : [String]?
         
         enum CodingKeys: String, CodingKey {
             

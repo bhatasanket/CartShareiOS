@@ -411,6 +411,11 @@
                                                 <segue destination="eLg-wW-8Xk" kind="unwind" unwindAction="unwindSegueWithSender:" id="n1g-aZ-734"/>
                                             </connections>
                                         </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Add a Cart" id="diP-WJ-2IK">
+                                            <connections>
+                                                <action selector="addCartAction:" destination="SGe-zg-KPq" id="Zfk-KP-EVn"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -484,6 +489,11 @@
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="0L6-6Z-tPi">
                                             <connections>
                                                 <segue destination="Qcg-9D-o0E" kind="unwind" unwindAction="unwindSegue1WithSender:" id="If1-kk-cuu"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Add item" id="eOI-5O-lz8">
+                                            <connections>
+                                                <action selector="addItemAction:" destination="xIo-MH-aaK" id="XBg-Ez-zWI"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>

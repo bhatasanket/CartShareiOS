@@ -22,6 +22,34 @@ class ItemViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    @IBAction func addItemAction(_ sender: UIBarButtonItem) {
+        var inputBox = UIAlertController(title: "Add Item", message:"", preferredStyle: UIAlertControllerStyle.alert)
+        inputBox.addTextField(configurationHandler: {
+            (textField)-> Void in
+        })
+        
+        inputBox.addAction(UIAlertAction(title: "Add", style: .default, handler: {
+            (action) -> Void in
+            let itemName = inputBox.textFields![0] as UITextField
+            self.cart?.item?.items?.append(Cart.Item.Items(name: itemName.text, addedBy: self.user?.item?.firstName, completed: false))
+            self.awsClient.saveCart(cart: self.cart!){
+                (response) in
+                if (response.response != "successful"){
+                    let alert = UIAlertController(title: "something went wrong", message: "Please try again", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                }
+                OperationQueue.main.addOperation {
+                    self.tableView.reloadData()
+                }
+            }
+            print(itemName.text!)
+        }))
+        
+        inputBox.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(inputBox, animated: true, completion: nil)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -75,6 +103,7 @@ extension ItemViewController: UITableViewDataSource{
         else{
             cell.textLabel?.text = ""
             cell.textLabel?.text = item?.name
+            cell.textLabel?.font = UIFont(name: "Bradley Hand", size: 25)
             return cell
 
         }

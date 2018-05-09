@@ -130,9 +130,15 @@ class AWSClient {
     
     func getUserDetails(userID: String, password: String, completion: @escaping (UserResult) -> Void) {
         
-        let url = URL(string: "https://"+awsBaseURL+"/prod/user?userID=\(userID)&password=\(password)")
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = awsBaseURL
+        urlComponents.path = "/prod/user"
+        urlComponents.queryItems = [URLQueryItem(name: "userID", value: userID),URLQueryItem(name: "password", value: password)]
+        guard let url = urlComponents.url else { fatalError("Could not create URL from components") }
+        //        let url = URL(string: "https://"+awsBaseURL+"/prod/user?userID=\(userID)&password=\(password)")
         let session = URLSession(configuration: .default)
-        let task = session.dataTask(with: url!) {
+        let task = session.dataTask(with: url) {
             (data, response, error) -> Void in
             print(error?.localizedDescription)
 
@@ -196,9 +202,18 @@ class AWSClient {
     
     func getFamilyDetails(familyID: String,completion: @escaping (FamilyResult)-> Void){
         
-        let url = URL(string: "https://"+awsBaseURL+"/prod/family?familyID=\(familyID)")
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = awsBaseURL
+        urlComponents.path = "/prod/family"
+        urlComponents.queryItems = [URLQueryItem(name: "familyID", value: familyID)]
+        guard let url = urlComponents.url else { fatalError("Could not create URL from components") }
+        
+        
+        
+//        let url = URL(string: "https://"+awsBaseURL+"/prod/family?familyID=\(familyID)")
         let session = URLSession(configuration: .default)
-        let task = session.dataTask(with: url!) {
+        let task = session.dataTask(with: url) {
             (data, response, error) -> Void in
             print(error?.localizedDescription)
             
@@ -217,7 +232,6 @@ class AWSClient {
         urlComponents.host = awsBaseURL
         urlComponents.path = "/prod/family"
         guard let url = urlComponents.url else { fatalError("Could not create URL from components") }
-        
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
         
@@ -285,10 +299,15 @@ class AWSClient {
     }
     
     func getCartDetails(cartID:String, familyID: String,completion: @escaping (CartResult)-> Void){
-        
-        let url = URL(string: "https://"+awsBaseURL+"/prod/cart?cartID=\(cartID)&familyID=\(familyID)")
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = awsBaseURL
+        urlComponents.path = "/prod/cart"
+        urlComponents.queryItems = [URLQueryItem(name: "cartID", value: cartID),URLQueryItem(name: "familyID", value: familyID)]
+        guard let url = urlComponents.url else { fatalError("Could not create URL from components") }
+//        let url = URL(string: "https://"+awsBaseURL+"/prod/cart?cartID=\(cartID)&familyID=\(familyID)")
         let session = URLSession(configuration: .default)
-        let task = session.dataTask(with: url!) {
+        let task = session.dataTask(with: url) {
             (data, response, error) -> Void in
             print(error?.localizedDescription)
             
