@@ -39,7 +39,9 @@ class LoginViewController: UIViewController {
                     switch response{
                     case let .success(detail):
                         self.user = detail
-                        self.performSegue(withIdentifier: "loginTofamily", sender: self)
+                        OperationQueue.main.addOperation {
+                            self.performSegue(withIdentifier: "loginTofamily", sender: self)
+                        }
                     case let .failure(error):
                         print(error)
                         let alert = UIAlertController(title: "failed to fetch family", message: "try again", preferredStyle: .alert)
@@ -50,11 +52,16 @@ class LoginViewController: UIViewController {
                         return
                     }
                 }
-                
-
-                
             }else{
-                
+                OperationQueue.main.addOperation {
+                    let alert = UIAlertController(title: "User not found", message: "try again", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                    self.txtPassword.text = ""
+                    self.txtUserName.text = ""
+                    self.txtUserName.becomeFirstResponder()
+                    return
+                }
             }
         }
     }

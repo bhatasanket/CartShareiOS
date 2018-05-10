@@ -103,8 +103,10 @@ extension CartViewController:UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CartCell")!
-        cell.textLabel?.text = family?.item?.carts![indexPath.row]
+        cell.textLabel?.text = ""
         cell.textLabel?.font = UIFont(name: "Bradley Hand", size: 27)
+        cell.textLabel?.text = family?.item?.carts![indexPath.row]
+
         return cell
     }
     
@@ -118,7 +120,9 @@ extension CartViewController: UITableViewDelegate{
             switch response{
             case let .success(detail):
                 self.selectedCart = detail
-                self.performSegue(withIdentifier: "cartToItem", sender: self)
+                OperationQueue.main.addOperation {
+                    self.performSegue(withIdentifier: "cartToItem", sender: self)
+                }
             case let .failure(error):
                 let alert = UIAlertController(title: "something went wrong", message: "Please try again", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
@@ -128,5 +132,29 @@ extension CartViewController: UITableViewDelegate{
         }
     }
     
-    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        // 1
+        
+        // 3
+        let rateAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete" , handler: {
+            (action:UITableViewRowAction, indexPath:IndexPath) -> Void in
+            self.awsClient.deleteCart(cartID: (self.family?.item?.carts![indexPath.row])!, familyID: (self.family?.item?.familyID)!){
+                (response) in
+                if response.response == "successful"{
+                    self.family?.item?.carts?.remove(at: indexPath.row)
+                    self.awsClient.saveFamily(family: self.family!){
+                        (response) in
+                        if response.response != "successful"{
+                            let alert = UIAlertController(title: "something went wrong", message: "Please try again", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+                            self.present(alert, animated: true)
+                        }
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+        })
+        // 5
+        return [rateAction]
+    }
 }

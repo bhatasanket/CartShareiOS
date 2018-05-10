@@ -84,7 +84,10 @@ class RegisterViewController: UIViewController {
         awsClient.saveUser(user: user!){ (response) in
             if response.response == "successful"{
                 print("success")
-                self.performSegue(withIdentifier: "registerToFamily", sender: self)
+                OperationQueue.main.addOperation {
+                    self.performSegue(withIdentifier: "registerToFamily", sender: self)
+
+                }
             }
         
         }

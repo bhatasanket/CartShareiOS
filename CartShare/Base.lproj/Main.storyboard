@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -440,17 +441,25 @@
                                     <color key="textColor" red="0.35686274509803922" green="0.58823529411764708" blue="0.62745098039215685" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="Items in cart" id="NNs-iA-hUV">
+                                    <navigationItem title="Items" id="NNs-iA-hUV">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="0L6-6Z-tPi">
                                             <connections>
                                                 <segue destination="Qcg-9D-o0E" kind="unwind" unwindAction="unwindSegue1WithSender:" id="If1-kk-cuu"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Add item" id="eOI-5O-lz8">
-                                            <connections>
-                                                <action selector="addItemAction:" destination="xIo-MH-aaK" id="XBg-Ez-zWI"/>
-                                            </connections>
-                                        </barButtonItem>
+                                        <rightBarButtonItems>
+                                            <barButtonItem systemItem="add" id="eOI-5O-lz8">
+                                                <connections>
+                                                    <action selector="addItemAction:" destination="xIo-MH-aaK" id="XBg-Ez-zWI"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem title="Change Priority" id="m3W-St-AkS">
+                                                <color key="tintColor" red="0.79215686269999996" green="0.12549019610000001" blue="0.08235294118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <connections>
+                                                    <action selector="changePriority:" destination="xIo-MH-aaK" id="Yha-Lb-9B0"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </rightBarButtonItems>
                                     </navigationItem>
                                 </items>
                             </navigationBar>

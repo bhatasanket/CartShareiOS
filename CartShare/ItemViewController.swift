@@ -23,6 +23,19 @@ class ItemViewController: UIViewController {
         
     }
 
+    @IBAction func changePriority(_ sender: UIBarButtonItem) {
+        tableView.isEditing = !tableView.isEditing
+        if !tableView.isEditing{
+            awsClient.saveCart(cart: cart!){
+                (response) in
+                if (response.response != "successful"){
+                    let alert = UIAlertController(title: "something went wrong", message: "Please try again", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                }
+            }
+        }
+    }
     @IBAction func addItemAction(_ sender: UIBarButtonItem) {
         var inputBox = UIAlertController(title: "Add Item", message:"", preferredStyle: UIAlertControllerStyle.alert)
         inputBox.addTextField(configurationHandler: {
@@ -110,10 +123,22 @@ extension ItemViewController: UITableViewDataSource{
         }
     
     }
+    
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let item = cart?.item?.items![sourceIndexPath.row]
+        cart?.item?.items!.remove(at: sourceIndexPath.row)
+        cart?.item?.items!.insert(item!, at: destinationIndexPath.row)
+    }
+    
 }
 extension ItemViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var detailBox = UIAlertController(title: "Item detail", message:"\(cart?.item?.items![indexPath.row].name!) added by \(cart?.item?.items![indexPath.row].addedBy!)", preferredStyle: UIAlertControllerStyle.alert)
+        let detailBox = UIAlertController(title: "Item detail", message:"\((cart!.item!.items![indexPath.row].name!)) added by \(cart!.item!.items![indexPath.row].addedBy!)", preferredStyle: UIAlertControllerStyle.alert)
         detailBox.addAction(UIAlertAction(title: "Done", style: .default, handler: nil))
         
         self.present(detailBox, animated: true, completion: nil)

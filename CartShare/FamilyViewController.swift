@@ -21,39 +21,42 @@ class FamilyViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         OperationQueue.main.addOperation {
-            
-            for invite in (self.user?.Item?.invitations)! {
-        var invitationBox = UIAlertController(title: "Invitation", message:"you have invitation to \(invite)", preferredStyle: UIAlertControllerStyle.alert)
-            invitationBox.addAction(UIAlertAction(title: "Accept", style: .default, handler: {
-                (action)-> Void in
-                self.user?.Item?.family?.append(invite)
-                self.awsClient.saveUser(user: self.user!){
-                    (response) in
-                    if response.response == "successful"{
-                        OperationQueue.main.addOperation {
-                            self.tableView.reloadData()
+            var invites = self.user?.Item?.invitations
+                for invite in invites! {
+                    let invitationBox = UIAlertController(title: "Invitation", message:"you have invitation to \(invite)", preferredStyle: UIAlertControllerStyle.alert)
+                    print("one")
+                    invitationBox.addAction(UIAlertAction(title: "Accept", style: .default, handler: {
+                        (action)-> Void in
+                        print("two")
+                        self.user?.Item?.family?.append(invite)
+                        self.awsClient.saveUser(user: self.user!){
+                            (response) in
+                            if response.response == "successful"{
+                                    self.tableView.reloadData()
+                                    self.user?.Item?.invitations?.removeFirst()
+                                    self.awsClient.saveUser(user: self.user!){
+                                        (response) in
+                                        if response.response == "successful"{
+//                                            OperationQueue.main.addOperation {
+                                                self.tableView.reloadData()
+//                                            }
+                                            
+                                        }
+                                    }
+                                }
+                                
+                            
                         }
-                        
-                    }
+                    }))
+                    invitationBox.addAction(UIAlertAction(title: "Decline", style: .cancel, handler: nil))
+                    
+                    self.present(invitationBox, animated: true, completion: nil)
                 }
-            }))
-            invitationBox.addAction(UIAlertAction(title: "Decline", style: .cancel, handler: nil))
-        
-        self.present(invitationBox, animated: true, completion: nil)
-        }
-//        user?.item?.invitations?.removeAll()
-//        awsClient.saveUser(user: user!){
-//            (response) in
-//            if response.response == "successful"{
-//                OperationQueue.main.addOperation {
-//                    self.tableView.reloadData()
-//                }
-//
-//            }
-//        }
-    }
 
-}
+            }
+            
+        }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -166,7 +169,10 @@ extension FamilyViewController: UITableViewDelegate{
             switch response{
             case let .success(detail):
                 self.family = detail
-                self.performSegue(withIdentifier: "FamilyToCart", sender: self)
+                OperationQueue.main.addOperation {
+                    self.performSegue(withIdentifier: "FamilyToCart", sender: self)
+
+                }
             case let .failure(error):
                 let alert = UIAlertController(title: "something went wrong", message: "Please try again", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
@@ -204,9 +210,19 @@ extension FamilyViewController: UITableViewDelegate{
                                     let alert = UIAlertController(title: "something went wrong", message: "Please try again", preferredStyle: .alert)
                                     alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
                                     self.present(alert, animated: true)
-                                    
+                                }
+                                else{
+                                    OperationQueue.main.addOperation {
+                                        let alert = UIAlertController(title: "Invitation Successfully sent", message: "", preferredStyle: .alert)
+                                        alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+                                        self.present(alert, animated: true)
+                                    }
                                 }
                             }
+                        }else{
+                            let alert = UIAlertController(title: "Invite unsuccessful", message: "User not found", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+                            self.present(alert, animated: true)
                         }
 
                         

@@ -388,5 +388,41 @@ class AWSClient {
         }.resume()
     }
     
+    
+    func deleteCart(cartID:String, familyID: String,completion: @escaping (CartResponse)-> Void){
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = awsBaseURL
+        urlComponents.path = "/prod/cart"
+        urlComponents.queryItems = [URLQueryItem(name: "cartID", value: cartID),URLQueryItem(name: "familyID", value: familyID)]
+        guard let url = urlComponents.url else { fatalError("Could not create URL from components") }
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        
+        var headers = request.allHTTPHeaderFields ?? [:]
+        headers["Content-Type"] = "application/json"
+        headers["Accept"] = "application/json"
+        request.allHTTPHeaderFields = headers
+        
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+        
+        session.dataTask(with: request) {
+            (data, _, error) -> Void in
+            if error != nil {
+                print(error!)
+                completion(CartResponse(response: "fail"))
+            } else {
+                let jsonDecoder = JSONDecoder()
+                do {
+                    let responseModel = try jsonDecoder.decode(CartResponse.self, from: data!)
+                    //                if let returnData = String(data: data!, encoding: .utf8) {
+                    completion(responseModel)
+                } catch {
+                    completion(CartResponse(response: "fail"))
+                }
+            }
+        }.resume()
+    }
 }
 

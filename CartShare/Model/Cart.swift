@@ -53,3 +53,12 @@ struct CartResponse : Codable {
     }
     
 }
+
+struct CartDelete : Codable {
+    let userID : String?
+    let familyID: String?
+    enum Codingkeys: String, CodingKey {
+        case userID = "userID"
+        case familyID = "familyID"
+    }
+}
